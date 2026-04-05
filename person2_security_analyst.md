@@ -20,7 +20,7 @@
 | ID | Entity | Description | Trust Level | Capabilities | Risk if Compromised | Entry Point Alignment (person1_architect.md) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | T1 | Guest User (Unauthenticated) | User browsing events without logging in | Low | View events, pricing, availability | Can probe entry points and attempt attacks |  |
-| T2 | Registered User (Customer) | Authenticated user purchasing and managing tickets | Medium | Purchase tickets, apply discounts, transfer tickets, request refunds | Can abuse workflows (refund abuse, ticket misuse) |  |
+| T2 | Registered User (Customer) | Authenticated user purchasing and managing tickets | Medium | Purchase tickets, apply discounts, request refunds | Can abuse workflows (refund abuse, ticket misuse) |  |
 | T3 | Staff User | Employees managing check-in and capacity | High | Validate tickets, control event entry, manage attendance | Can override controls or allow unauthorized access | Entry Point 1.6 Staff Check-in (Trust Level (4)) |
 | T4 | Administrator | System-level user with full access | Very High | Manage users, pricing rules, events, system configuration | Full system compromise if exploited | Web Gateway (HTTPS) (Trust Level (5)) — admin-only routes (assumed) |
 | T5 | Backend Application (API Server) | Core logic processing requests and enforcing rules | High | Handles authentication, ticket lifecycle, pricing, validation | Business logic bypass if compromised |  |
