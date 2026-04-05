@@ -1,4 +1,4 @@
-## Section 5: Assets
+## Section 4: Assets
 
 Assets are components of the system that have value and must be protected from unauthorized access, modification, or disruption.
 They include data, processes, and system functionalities that, if compromised, could impact security, financial integrity, or system operation.
@@ -18,7 +18,7 @@ In general, assets represent anything of value to the system that could be targe
 | A11 | Application Backend (APIs) | Node.js + Express APIs handling business logic | Backend | High | Vulnerabilities here can expose or manipulate all core operations |
 | A12 | Containerized Infrastructure | Deployment environment hosting services | Admin, Backend | Medium-High | Misconfiguration can expose services or enable lateral movement |
 
-## Section 6: Trust Levels
+## Section 5: Trust Levels
 
 Trust Levels represent the entities that interact with the system and the degree of trust assigned to them based on their role and behavior.
 They include both human users and system components, each with different capabilities and access to system resources.
@@ -36,7 +36,7 @@ Trust levels define the degree of trust and the level of access the application 
 | T9 | Client Application (Angular SPA) | Frontend interface used by users and staff | Low (Untrusted) | Sends requests to backend APIs | Can be manipulated; cannot be trusted |  |
 | T10 | Container/Hosting Environment | Infrastructure running the application | Medium | Hosts services and manages deployment | Misconfiguration or privilege escalation |  |
 
-### STRIDE Threat Analysis
+### Section 7: STRIDE Analysis
 
 STRIDE is a threat modeling framework used to identify and categorize potential security threats in a system based on different types of risks.
 It helps analyze how an application can be attacked by examining vulnerabilities.
