@@ -4,7 +4,7 @@
 
 ---
 
-## 4. Exit Points
+## 3.2 Exit Points
 
 As the Technical Lead, I have identified the following points where data leaves the SMU trust boundary. These are critical for assessing **Information Disclosure** and **Repudiation** risks within the STRIDE framework.
 
@@ -17,9 +17,9 @@ As the Technical Lead, I have identified the following points where data leaves 
 
 ---
 
-## 7. Data Flow Diagram (DFD) & Logic
+## 6. Data Flow Diagram (DFD) & Logic
 
-### 7.1 Level 1 Data Flow Diagram Analysis
+### 6.1 Level 1 Data Flow Diagram Analysis
 
 The system architecture centers on the movement of data across the **SMU Trust Boundary**.
 
@@ -29,7 +29,7 @@ The system architecture centers on the movement of data across the **SMU Trust B
 
 ![Data_Flow_Diagram](DFD_Mermaid.svg)
 
-### 7.2 Ticket State Machine
+### 6.2 Ticket State Machine
 
 Unlike the standard OWASP Juice Shop, this platform enforces strict state transitions to manage maritime event capacity and financial integrity.
 
