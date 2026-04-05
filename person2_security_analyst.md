@@ -78,4 +78,82 @@ E – Elevation of Privilege: Gaining higher access rights than intended (e.g., 
 | E1 | Elevation of Privilege | User escalates privileges to perform staff actions | Enforce role-based access control (RBAC), validate permissions server-side | A9 – Staff Operations | T2, T5 | Unauthorized operations |
 | E2 | Elevation of Privilege | Exploiting backend to gain admin access | Input validation, secure coding practices, regular security testing (SAST/DAST) | A11 – Backend APIs | T2, T5 | Full system compromise |
 
+## Section 8: OWASP Risk Rating Model
+
+The following method was applied to evaluate and prioritize the identified STRIDE threats. Each threat was assessed using two dimensions: Severity and Likelihood, both scored on a scale from 0 to 5 using a set of predefined yes/no questions. Each question was evaluated using a binary approach, where a “Yes” response contributes 1 point and a “No” response contributes 0 points.
+
+Severity measures the potential impact of a threat and was determined based on financial loss, reputational damage, impact on ticket state integrity, disruption of core business workflows, and the scale of affected users.
+
+Likelihood measures how feasible the attack is and was evaluated based on factors such as remote exploitability, required authentication level, potential for automation, and the level of technical skill and tools required.
+
+The final Risk Score was calculated as the sum of Severity and Likelihood (range 0–10). This approach provides a transparent and consistent method to rank threats, with particular emphasis on business workflow abuse and financial impact.
+
+---
+
+### Severity Questions
+
+| ID | Question |
+| :--- | :--- |
+| Z1 | Does the threat lead to direct financial loss? (e.g., free tickets, refund abuse, pricing manipulation) |
+| Z2 | Does the threat cause reputational damage to the organization? (e.g., overselling events, public complaints) |
+| Z3 | Does the threat affect ticket state integrity? (e.g., bypassing payment, reusing tickets) |
+| Z4 | Does the threat affect core business workflows? (e.g., booking, refunds, check-in processes) |
+| Z5 | Does the threat impact multiple users or the system at scale? (e.g., many tickets/events affected) |
+
+---
+
+### Likelihood Questions
+
+| ID | Question |
+| :--- | :--- |
+| L1 | Can the threat be exploited remotely (over the internet)? |
+| L2 | Can the threat be exploited without authentication or with low privileges? |
+| L3 | Can the attack be automated or repeated easily? |
+| L4 | Does the exploit require low technical skill? (e.g., simple request manipulation) |
+| L5 | Does the exploit require only simple tools? (e.g., browser dev tools, scripts) |
+
+---
+
+### STRIDE Risk Scoring
+
+| ID | Severity (Z1–Z5) | Likelihood (L1–L5) | Risk Score |
+| :--- | :--- | :--- | :--- |
+| S1 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✖ L3✔ L4✔ L5✔ = **4** | **8** |
+| S2 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✖ = **3** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **8** |
+| T1 | Z1✔ Z2✔ Z3✔ Z4✔ Z5✔ = **5** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **10** |
+| T2 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **9** |
+| T3 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✖ L2✖ L3✖ L4✔ L5✔ = **2** | **6** |
+| T4 | Z1✔ Z2✔ Z3✔ Z4✔ Z5✔ = **5** | L1✔ L2✖ L3✔ L4✔ L5✔ = **4** | **9** |
+| R1 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **9** |
+| R2 | Z1✖ Z2✔ Z3✖ Z4✔ Z5✖ = **2** | L1✖ L2✖ L3✖ L4✔ L5✔ = **2** | **4** |
+| I1 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✖ L3✔ L4✔ L5✔ = **4** | **8** |
+| I2 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✖ L3✔ L4✔ L5✔ = **4** | **8** |
+| I3 | Z1✖ Z2✔ Z3✖ Z4✔ Z5✔ = **3** | L1✖ L2✖ L3✖ L4✔ L5✔ = **2** | **5** |
+| D1 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **9** |
+| D2 | Z1✔ Z2✔ Z3✖ Z4✔ Z5✔ = **4** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **9** |
+| E1 | Z1✔ Z2✔ Z3✔ Z4✔ Z5✔ = **5** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **10** |
+| E2 | Z1✔ Z2✔ Z3✔ Z4✔ Z5✔ = **5** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **10** |
+
+---
+
+### Risk Ranking
+
+| Rank | Threat ID | Risk Score |
+| :--- | :--- | :--- |
+| 1 | T1 | 10 |
+| 1 | E1 | 10 |
+| 1 | E2 | 10 |
+| 2 | T2 | 9 |
+| 2 | T4 | 9 |
+| 2 | R1 | 9 |
+| 2 | D1 | 9 |
+| 2 | D2 | 9 |
+| 3 | S1 | 8 |
+| 3 | S2 | 8 |
+| 3 | I1 | 8 |
+| 3 | I2 | 8 |
+| 4 | T3 | 6 |
+| 5 | I3 | 5 |
+| 6 | R2 | 4 |
+
 ---
