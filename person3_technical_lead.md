@@ -30,8 +30,8 @@ The Level 1 decomposition models ticketing as a stateful workflow where untruste
 5. **Business rule pre-validation:** Server validates event ID, ticket ownership, reservation eligibility, transition legality, and payload integrity.
 6. **Read phase from SQLite:** API queries `/var/lib/tallships/db/ticketing.sqlite` to retrieve current ticket state, reservation timer, and event capacity counters.
 7. **Atomic transition decision:** API evaluates the requested transition against current persisted state and executes an atomic update only if all guards pass.
-8. **Outbound payment interaction (when applicable):** For payment flow, API initiates payment request and later accepts callback only when cryptographically and semantically verified.
-9. **Outbound SMTP notification (when applicable):** On successful paid/refunded transitions, API sends ticket/refund confirmation through SMU SMTP relay.
+8. **Outbound payment interaction:** For payment flow, API initiates payment request and later accepts callback only when cryptographically and semantically verified.
+9. **Outbound SMTP notification:** On successful paid/refunded transitions, API sends ticket/refund confirmation through SMU SMTP relay.
 10. **Response to client and audit trace:** API returns sanitized response to user/staff client and writes traceable server-side logs for non-repudiation.
 
 ### 6.1.1 SMU Trust Boundary Enforcement
