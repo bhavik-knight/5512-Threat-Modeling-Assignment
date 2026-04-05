@@ -17,18 +17,18 @@
 
 ## Section 6: Trust Levels
 
-| ID | Entity | Description | Trust Level | Capabilities | Risk if Compromised | Entry Point Alignment (person1_architect.md) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| T1 | Guest User (Unauthenticated) | User browsing events without logging in | Low | View events, pricing, availability | Can probe entry points and attempt attacks |  |
-| T2 | Registered User (Customer) | Authenticated user purchasing and managing tickets | Medium | Purchase tickets, apply discounts, transfer tickets, request refunds | Can abuse workflows (refund abuse, ticket misuse) |  |
-| T3 | Staff User | Employees managing check-in and capacity | High | Validate tickets, control event entry, manage attendance | Can override controls or allow unauthorized access | Entry Point 1.6 Staff Check-in (Trust Level (4)) |
-| T4 | Administrator | System-level user with full access | Very High | Manage users, pricing rules, events, system configuration | Full system compromise if exploited | Web Gateway (HTTPS) (Trust Level (5)) — admin-only routes (assumed) |
-| T5 | Backend Application (API Server) | Core logic processing requests and enforcing rules | High | Handles authentication, ticket lifecycle, pricing, validation | Business logic bypass if compromised |  |
-| T6 | Database System | Stores all persistent data | High | Stores tickets, users, transactions, states | Data tampering or leakage affects entire system |  |
-| T7 | External Payment System | Third-party service handling payments | Medium-High | Processes transactions and returns payment status | Fake payment confirmations or fraud |  |
-| T8 | Authentication Mechanism (JWT) | Token-based authentication system | High | Grants access based on token validity | Token forgery or impersonation |  |
-| T9 | Client Application (Angular SPA) | Frontend interface used by users and staff | Low (Untrusted) | Sends requests to backend APIs | Can be manipulated; cannot be trusted |  |
-| T10 | Container/Hosting Environment | Infrastructure running the application | Medium | Hosts services and manages deployment | Misconfiguration or privilege escalation |  |
+| ID | Entity | Description | Trust Level | Capabilities | Risk if Compromised |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| T1 | Guest User (Unauthenticated) | User browsing events without logging in | Low | View events, pricing, availability | Can probe entry points and attempt attacks |
+| T2 | Registered User (Customer) | Authenticated user purchasing and managing tickets | Medium | Purchase tickets, apply discounts, transfer tickets, request refunds | Can abuse workflows (refund abuse, ticket misuse) |
+| T3 | Staff User | Employees managing check-in and capacity | High | Validate tickets, control event entry, manage attendance | Can override controls or allow unauthorized access |
+| T4 | Administrator | System-level user with full access | Very High | Manage users, pricing rules, events, system configuration | Full system compromise if exploited |
+| T5 | Backend Application (API Server) | Core logic processing requests and enforcing rules | High | Handles authentication, ticket lifecycle, pricing, validation | Business logic bypass if compromised |
+| T6 | Database System | Stores all persistent data | High | Stores tickets, users, transactions, states | Data tampering or leakage affects entire system |
+| T7 | External Payment System | Third-party service handling payments | Medium-High | Processes transactions and returns payment status | Fake payment confirmations or fraud |
+| T8 | Authentication Mechanism (JWT) | Token-based authentication system | High | Grants access based on token validity | Token forgery or impersonation |
+| T9 | Client Application (Angular SPA) | Frontend interface used by users and staff | Low (Untrusted) | Sends requests to backend APIs | Can be manipulated; cannot be trusted |
+| T10 | Container/Hosting Environment | Infrastructure running the application | Medium | Hosts services and manages deployment | Misconfiguration or privilege escalation |
 
 ### STRIDE Threat Analysis
 
