@@ -1,4 +1,8 @@
-## Section 5: Assets
+## Section 4: Assets
+
+Assets are components of the system that have value and must be protected from unauthorized access, modification, or disruption.
+They include data, processes, and system functionalities that, if compromised, could impact security, financial integrity, or system operation.
+In general, assets represent anything of value to the system that could be targeted or abused by an attacker.
 
 | ID | Asset | Description | Associated Trust Level | Sensitivity | Why It Matters (Risk) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -15,7 +19,14 @@
 | A11 | Application Backend (APIs) | Node.js + Express APIs handling business logic | Backend | High | Vulnerabilities here can expose or manipulate all core operations |
 | A12 | Containerized Infrastructure | Deployment environment hosting services | Admin, Backend | Medium-High | Misconfiguration can expose services or enable lateral movement |
 
-## Section 6: Trust Levels
+---
+
+## Section 5: Trust Levels
+
+Trust Levels represent the entities that interact with the system and the degree of trust assigned to them based on their role and behavior.
+They include both human users and system components, each with different capabilities and access to system resources.
+Trust levels define the degree of trust and the level of access the application grants to these entities.
+
 
 | ID | Entity | Description | Trust Level | Capabilities | Risk if Compromised |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -30,7 +41,24 @@
 | T9 | Client Application (Angular SPA) | Frontend interface used by users and staff | Low (Untrusted) | Sends requests to backend APIs | Can be manipulated; cannot be trusted |
 | T10 | Container/Hosting Environment | Infrastructure running the application | Medium | Hosts services and manages deployment | Misconfiguration or privilege escalation |
 
-### STRIDE Threat Analysis
+---
+
+### Section 7: STRIDE Analysis
+
+STRIDE is a threat modeling framework used to identify and categorize potential security threats in a system based on different types of risks.
+It helps analyze how an application can be attacked by examining vulnerabilities.
+
+S – Spoofing: Impersonating another user or system (e.g., using stolen credentials or tokens) to gain unauthorized access.
+
+T – Tampering: Modifying data or system state (e.g., altering requests or changing ticket states) in an unauthorized way.
+
+R – Repudiation: Denying actions performed in the system due to lack of proper logging or tracking (e.g., a user denies making a purchase).
+
+I – Information Disclosure: Exposing sensitive information to unauthorized parties (e.g., leaking user data or payment details).
+
+D – Denial of Service (DoS): Disrupting system availability so legitimate users cannot access services (e.g., flooding APIs or blocking ticket availability).
+
+E – Elevation of Privilege: Gaining higher access rights than intended (e.g., a user becomes an admin or staff member).
 
 | ID | Threat Type | Threat Description | Security Controls | Asset Affected | Trust Levels | Impact |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -50,3 +78,4 @@
 | E1 | Elevation of Privilege | User escalates privileges to perform staff actions | Enforce role-based access control (RBAC), validate permissions server-side | A9 – Staff Operations | T2, T5 | Unauthorized operations |
 | E2 | Elevation of Privilege | Exploiting backend to gain admin access | Input validation, secure coding practices, regular security testing (SAST/DAST) | A11 – Backend APIs | T2, T5 | Full system compromise |
 
+---
