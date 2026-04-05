@@ -134,6 +134,8 @@ The final Risk Score was calculated as the sum of Severity and Likelihood (range
 | E1 | Z1✔ Z2✔ Z3✔ Z4✔ Z5✔ = **5** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **10** |
 | E2 | Z1✔ Z2✔ Z3✔ Z4✔ Z5✔ = **5** | L1✔ L2✔ L3✔ L4✔ L5✔ = **5** | **10** |
 
+![Risk Matrix](risk_matrix_final.png)
+
 ---
 
 ### Risk Ranking
