@@ -26,7 +26,7 @@ This document outlines the system boundaries, environmental setup, and entry poi
 
 ---
 
-## 3. Entry Points
+## 3.1 Entry Points
 | ID | Name | Description | Trust Levels |
 | :--- | :--- | :--- | :--- |
 | 1 | Web Gateway (HTTPS) | The primary TLS-secured entry point for all browser-based traffic. | (1), (2), (4), (5) |
