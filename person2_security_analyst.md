@@ -1,5 +1,8 @@
 ## Section 5: Assets
 
+Assets are components of the system that have value and must be protected from unauthorized access, modification, or disruption.
+They include data, processes, and system functionalities that, if compromised, could impact security, financial integrity, or system operation.
+In general, assets represent anything of value to the system that could be targeted or abused by an attacker.
 | ID | Asset | Description | Associated Trust Level | Sensitivity | Why It Matters (Risk) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | A1 | Ticket Records | Digital tickets associated with users and events | Registered User, Backend, Database | High | Unauthorized modification or duplication could allow fraud (free entry, resale abuse) |
@@ -17,6 +20,9 @@
 
 ## Section 6: Trust Levels
 
+Trust Levels represent the entities that interact with the system and the degree of trust assigned to them based on their role and behavior.
+They include both human users and system components, each with different capabilities and access to system resources.
+Trust levels define the degree of trust and the level of access the application grants to these entities.
 | ID | Entity | Description | Trust Level | Capabilities | Risk if Compromised | Entry Point Alignment (person1_architect.md) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | T1 | Guest User (Unauthenticated) | User browsing events without logging in | Low | View events, pricing, availability | Can probe entry points and attempt attacks |  |
@@ -32,6 +38,20 @@
 
 ### STRIDE Threat Analysis
 
+STRIDE is a threat modeling framework used to identify and categorize potential security threats in a system based on different types of risks.
+It helps analyze how an application can be attacked by examining vulnerabilities.
+
+S – Spoofing: Impersonating another user or system (e.g., using stolen credentials or tokens) to gain unauthorized access.
+
+T – Tampering: Modifying data or system state (e.g., altering requests or changing ticket states) in an unauthorized way.
+
+R – Repudiation: Denying actions performed in the system due to lack of proper logging or tracking (e.g., a user denies making a purchase).
+
+I – Information Disclosure: Exposing sensitive information to unauthorized parties (e.g., leaking user data or payment details).
+
+D – Denial of Service (DoS): Disrupting system availability so legitimate users cannot access services (e.g., flooding APIs or blocking ticket availability).
+
+E – Elevation of Privilege: Gaining higher access rights than intended (e.g., a user becomes an admin or staff member).
 | ID | Threat Type | Threat Description | Security Controls | Asset Affected | Trust Levels | Impact |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | S1 | Spoofing | Attacker steals or forges JWT to impersonate a valid user or staff member | Use short-lived tokens, secure storage (HttpOnly cookies), token signing with strong secrets, token validation on every request | A5 – JWT Tokens | T2, T3, T8 | Unauthorized access, privilege escalation |
