@@ -94,8 +94,80 @@ For this system, primary risk concentration is business logic integrity, not onl
 
 ![State_Diagram](Threat_Modeling_State_Diagram.svg)
 
+
 ---
 
-## 8. Technical Risk Synthesis (Person 3 Scope)
+# 9. Countermeasures and Mitigation
 
-The Technical Lead scope for this assignment is to define implementation-level controls that preserve lifecycle integrity and safe data movement. Consolidated STRIDE scoring and OWASP risk rating are maintained by Person 2 to avoid duplicated ownership. (Person 2 is doing this)
+As the Technical Lead, I have developed the following mitigation plan for the top-five ranked threats identified by Person 2 (T1, E1, E2, T2, T4). The goal is to enforce security-by-design for Tall Ships Halifax ticket lifecycle integrity, boat capacity safety, and staff-operated QR check-in controls.
+
+## 9.1 Mitigation for T1
+
+- Target Threat ID: `T1`
+- Threat Mapping: Tampering - User manipulates requests to change ticket state without proper workflow.
+- Design Principle: Defense in Depth and Never Trust Client Input
+- OWASP Cheat Sheet: OWASP Transaction Authorization Cheat Sheet; OWASP Input Validation Cheat Sheet
+- Juice Shop Correlation: Business Logic Abuse / BFLA-style state transition bypass
+- Technical Solution (Node.js/Express/SQLite):
+	- Implement a server-owned finite-state transition map and reject any transition not explicitly allowed.
+	- Require current-state preconditions in SQL (`WHERE ticket_id=? AND state='RESERVED'`) so invalid transitions produce zero-row updates.
+	- Use centralized transition service in Express controllers so all endpoints share the same guardrail logic.
+	- Persist actor ID, previous state, new state, and correlation ID for every transition in immutable audit records.
+
+## 9.2 Mitigation for E1
+
+- Target Threat ID: `E1`
+- Threat Mapping: Elevation of Privilege - User escalates privileges to perform staff actions.
+- Design Principle: Least Privilege
+- OWASP Cheat Sheet: OWASP Authorization Cheat Sheet; OWASP REST Security Cheat Sheet
+- Juice Shop Correlation: Broken Functional Level Authorization (BFLA)
+- Technical Solution (Node.js/Express/SQLite):
+	- Enforce RBAC middleware on all staff-only routes, especially the QR check-in endpoint that moves `PAID -> USED`.
+	- Validate JWT role claims and resolve role from server-side user table for high-risk actions.
+	- Deny by default when role context is missing or ambiguous; return generic 403 response without internal details.
+	- Implement route-level policy tests to verify that customer tokens cannot invoke staff check-in APIs.
+
+## 9.3 Mitigation for E2
+
+- Target Threat ID: `E2`
+- Threat Mapping: Elevation of Privilege - Exploiting backend to gain admin access.
+- Design Principle: Fail Securely and Secure by Default
+- OWASP Cheat Sheet: OWASP Secure Coding Practices Quick Reference Guide; OWASP Authentication Cheat Sheet
+- Juice Shop Correlation: Privilege Escalation via weak backend authorization and insecure defaults
+- Technical Solution (Node.js/Express/SQLite):
+	- Separate admin and non-admin route groups with explicit authorization middleware chaining.
+	- Require token audience/issuer validation, short token TTL, and key rotation for JWT signing keys.
+	- Add strict input schema validation (for example, Zod/Joi) on admin mutation endpoints before controller logic.
+	- Add SAST/DAST checks in CI and block deployment on high-severity authz findings.
+
+## 9.4 Mitigation for T2
+
+- Target Threat ID: `T2`
+- Threat Mapping: Tampering - User alters request to apply unauthorized discounts.
+- Design Principle: Complete Mediation
+- OWASP Cheat Sheet: OWASP Business Logic Security Cheat Sheet; OWASP Mass Assignment Cheat Sheet
+- Juice Shop Correlation: IDOR and business rule bypass patterns around coupon/discount abuse
+- Technical Solution (Node.js/Express/SQLite):
+	- Perform server-side promo validation only; never trust client-submitted final price.
+	- Bind promo codes to event IDs, user IDs (if required), validity windows, and usage counters.
+	- Compute authoritative order total on the server from catalog price + approved rule set.
+	- Use database constraints/indexes to enforce one-time or bounded promo redemption limits.
+
+## 9.5 Mitigation for T4
+
+- Target Threat ID: `T4`
+- Threat Mapping: Tampering - Manipulation of payment response to simulate success.
+- Design Principle: Trust but Verify
+- OWASP Cheat Sheet: OWASP Webhook Security Guidelines Cheat Sheet; OWASP Transaction Authorization Cheat Sheet
+- Juice Shop Correlation: Forged callback/payment status tampering and race-condition replay patterns
+- Technical Solution (Node.js/Express/SQLite):
+	- Validate payment callback signatures using HMAC-SHA256 with per-environment shared secret.
+	- Verify callback nonce/timestamp and enforce idempotency keys to block replayed confirmations.
+	- Match payment provider transaction reference, amount, and currency against reservation record before `RESERVED -> PAID`.
+	- Execute payment verification, ticket state change, and capacity/accounting update in one atomic SQLite transaction.
+
+## 9.6 Implementation Notes for Tall Ships Halifax
+
+- Capacity integrity is a safety requirement: overbooking boat tours must be prevented with atomic reservation and refund accounting.
+- Staff QR check-in is a high-risk control point: enforce strong RBAC, signed QR payload validation, and one-time check-in semantics.
+- All state-changing endpoints must be server-authoritative, auditable, and idempotent to prevent workflow abuse.
