@@ -1,9 +1,13 @@
 # Threat Model: Tall Ships Halifax
 
+---
 title: "Insecure Design: Threat Modeling - Tall Ships Halifax"
-author: [Bhavik Kantilal Bhagat, Miguel Angel Palafox Gomez, Nikola Kriznar]
-date: "April 2026"
-geometry: "left=0.5in,right=0.5in,top=0.5in,bottom=0.5in"
+author: 
+  - "Bhavik Kantilal Bhagat"
+  - "Miguel Angel Palafox Gomez"
+  - "Nikola Kriznar"
+date: "April 7, 2026"
+geometry: "margin=0.5in"
 output: pdf_document
 
 ---
@@ -108,6 +112,8 @@ Trust levels represent users and system components that interact with the platfo
 
 The Level 1 decomposition models ticketing as a stateful workflow in which untrusted requests are transformed into validated state changes inside the SMU trust boundary before any external propagation occurs.
 
+![Threat_Modeling_DataFlow_Diagram.png](screenshots/Threat_Modeling_DataFlow_Diagram.png)
+
 1. User and staff traffic enters through the HTTPS web gateway within the SMU perimeter.
 2. Requests route to Node.js/Express API handlers for browse, reserve, pay, refund, and check-in functions.
 3. JWT controls verify signature, expiration, audience, and role claims before business logic execution.
@@ -147,8 +153,6 @@ Insecure design failure modes to avoid include client-authoritative transition r
 
 Technical position: primary risk concentration in this system is business logic integrity. Every transition must be validated server-side against persisted current state, policy constraints, and actor authorization before commit.
 
-![Threat_Modeling_DataFlow_Diagram.png](screenshots/Threat_Modeling_DataFlow_Diagram.png)
-
 *Figure 1: Level 1 DFD of the Tall Ships Halifax Ticketing System.*
 
 ---
@@ -165,6 +169,8 @@ STRIDE is applied to classify security threats by attack intent and impact domai
 - Information Disclosure: exposure of sensitive information to unauthorized entities.
 - Denial of Service: degradation or interruption of service availability.
 - Elevation of Privilege: unauthorized gain of higher access rights.
+
+![Threat_Modeling_State_Diagram.png](screenshots/Threat_Modeling_State_Diagram.png)
 
 | ID | Threat Type | Threat Description | Security Controls | Asset Affected | Trust Levels | Impact |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -184,7 +190,7 @@ STRIDE is applied to classify security threats by attack intent and impact domai
 | E1 | Elevation of Privilege | User escalates to staff operations | Strict RBAC and endpoint authorization checks | A9 | T2, T5 | Unauthorized operational actions |
 | E2 | Elevation of Privilege | Backend flaws allow admin privilege gain | Secure coding practices, strict validation, continuous testing | A11 | T2, T5 | Full system compromise |
 
-![Threat_Modeling_State_Diagram.png](screenshots/Threat_Modeling_State_Diagram.png)
+
 
 *Figure 2: Finite State Machine for Ticket Lifecycle Validation.*
 
