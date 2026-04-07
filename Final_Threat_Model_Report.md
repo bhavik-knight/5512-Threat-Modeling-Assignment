@@ -26,6 +26,9 @@ This report models the Tall Ships Halifax ticketing platform as a stateful marit
 | Document Owners | Technical Lead, Security Analyst, System Architect |
 | Academic Context | SMU and NSCC threat modeling assignment |
 
+![Threat_Modeling_Architecture_Diagram.png](screenshots/Threat_Modeling_Architecture_Diagram.png)
+
+
 ### 2. External Dependencies (SMU and NSCC Context)
 
 The following dependencies define critical external and infrastructural relationships that influence the system attack surface and control design.
@@ -39,8 +42,6 @@ The following dependencies define critical external and infrastructural relation
 | 2.5 | Campus Security Perimeter | Campus firewall and TLS termination at load balancer protecting ingress traffic. |
 
 #### 2.1 Architecture Overview
-
-![Threat_Modeling_Architecture_Diagram.png](screenshots/Threat_Modeling_Architecture_Diagram.png)
 
 *Supplementary Figure: High-level architecture diagram of the Tall Ships Halifax platform and trust boundaries.*
 
@@ -135,6 +136,8 @@ The SMU trust boundary separates untrusted actors (public clients and external p
 
 This separation prevents client-authoritative state mutation by ensuring only trusted server code can authorize and persist lifecycle transitions.
 
+![Threat_Modeling_State_Diagram.png](screenshots/Threat_Modeling_State_Diagram.png)
+
 #### 6.2 Finite State Machine Logic for Lifecycle Integrity
 
 The ticket lifecycle is enforced as a constrained state machine:
@@ -153,7 +156,10 @@ Insecure design failure modes to avoid include client-authoritative transition r
 
 Technical position: primary risk concentration in this system is business logic integrity. Every transition must be validated server-side against persisted current state, policy constraints, and actor authorization before commit.
 
-*Figure 1: Level 1 DFD of the Tall Ships Halifax Ticketing System.*
+---
+
+
+
 
 ---
 
@@ -169,8 +175,6 @@ STRIDE is applied to classify security threats by attack intent and impact domai
 - Information Disclosure: exposure of sensitive information to unauthorized entities.
 - Denial of Service: degradation or interruption of service availability.
 - Elevation of Privilege: unauthorized gain of higher access rights.
-
-![Threat_Modeling_State_Diagram.png](screenshots/Threat_Modeling_State_Diagram.png)
 
 | ID | Threat Type | Threat Description | Security Controls | Asset Affected | Trust Levels | Impact |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
